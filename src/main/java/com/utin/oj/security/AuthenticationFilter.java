@@ -1,10 +1,11 @@
 package com.utin.oj.security;
 
-import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.utin.oj.domain.ApiAuthentication;
+import com.utin.oj.domain.Response;
+import com.utin.oj.dto.User;
 import com.utin.oj.dtorequest.LoginRequest;
-import com.utin.oj.enumeration.LoginType;
+import com.utin.oj.entity.CredentialEntity;
 import com.utin.oj.service.JwtService;
 import com.utin.oj.service.UserService;
 import jakarta.servlet.FilterChain;
@@ -19,14 +20,20 @@ import org.springframework.security.web.authentication.AbstractAuthenticationPro
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.io.IOException;
-
 import static com.fasterxml.jackson.core.JsonParser.Feature.AUTO_CLOSE_SOURCE;
 import static com.utin.oj.enumeration.LoginType.*;
+import static com.utin.oj.enumeration.TokenType.ACCESS;
+import static com.utin.oj.enumeration.TokenType.REFRESH;
+import static com.utin.oj.utils.RequestUtils.getResponse;
 import static com.utin.oj.utils.RequestUtils.handleErrorResponse;
+import static java.util.Map.of;
 import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Slf4j
 public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+
 
     private final UserService userService;
     private final JwtService jwtService;
@@ -51,7 +58,25 @@ public class AuthenticationFilter extends AbstractAuthenticationProcessingFilter
     }
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        super.successfulAuthentication(request, response, chain, authResult);
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
+       var user = (User) authentication.getPrincipal();
+       userService.updateLoginAttempt(user.getEmail(), LOGIN_SUCCESS);
+       var httpResponse = user.isMfa() ? sendQrCode(request, user) : sendResponse(request, response, user);
+       response.setContentType(APPLICATION_JSON_VALUE);
+       response.setStatus(OK.value());
+       var out = response.getOutputStream();
+       var mapper = new ObjectMapper();
+       mapper.writeValue(out, httpResponse);
+       out.flush();
+    }
+
+    private Response sendResponse(HttpServletRequest request, HttpServletResponse response, User user) {
+        jwtService.addCookie(response, user, ACCESS);
+        jwtService.addCookie(response, user, REFRESH);
+        return getResponse(request, of("user", user), "Login Success", OK);
+    }
+
+    private Response sendQrCode(HttpServletRequest request, User user) {
+        return  getResponse(request, of("user", user),"Please enter QR code", OK);
     }
 }

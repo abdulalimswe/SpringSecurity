@@ -50,7 +50,7 @@ public class RequestUtils {
             return  exception.getMessage();
         }
         if(httpStatus.is5xxServerError()){
-            return  "an internal server error occourred";
+            return  "an internal server error occurred";
         }
         else {return "An error occurred. Please try again"; }
     };

@@ -1,5 +1,6 @@
 package com.utin.oj.security;
 
+import com.utin.oj.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,8 +37,9 @@ public class FilterChainConfiguration {
 
     @Bean
     public AuthenticationManager authenticationManager (UserDetailsService userDetailsService){
-        var myOwnAuthenticationProvider = new MyOwnAuthenticationProvider(userDetailsService);
-        return new ProviderManager(myOwnAuthenticationProvider);
+        //var myOwnAuthenticationProvider = new ApiAuthenticationProvider(userDetailsService);
+        //return new ProviderManager(myOwnAuthenticationProvider);
+        return null;
     }
 
 //    @Bean

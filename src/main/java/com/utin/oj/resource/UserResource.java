@@ -6,6 +6,7 @@ import com.utin.oj.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,11 +25,15 @@ import static org.springframework.http.HttpStatus.OK;
 @RequiredArgsConstructor
 @RequestMapping(path = {"/user"})
 public class UserResource {
+
+    @Autowired
     private final UserService userService;
+
+
 
     @PostMapping("/register")
     public ResponseEntity<Response> saveUser(@RequestBody @Valid UserRequest user, HttpServletRequest request){
-        userService.createUser(user.getFirstname(), user.getLastname(), user.getEmail(), user.getPassword());
+        userService.createUser(user.getFirstName(), user.getLastName(), user.getEmail(), user.getPassword());
 
         return ResponseEntity.created( getUri()).body(getResponse(request, emptyMap(), "Account Created. Check Your mail to enable your account", CREATED));
 

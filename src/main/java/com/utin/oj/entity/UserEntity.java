@@ -23,8 +23,10 @@ import static jakarta.persistence.FetchType.EAGER;
 public class UserEntity extends Auditable{
     @Column(updatable = false, unique = true, nullable = false)
     private String userId;
-    private String firstname;
-    private String lastname;
+    @Getter
+    private String firstName;
+    @Getter
+    private String lastName;
     @Column(unique = true, nullable = false)
     private String email;
     private Integer loginAttempts;
@@ -33,7 +35,7 @@ public class UserEntity extends Auditable{
     private String bio;
     private String imageUrl;
     private Boolean accountNonExpired;
-    private Boolean AccountNonLocked;
+    private Boolean accountNonLocked;
     private Boolean enabled;
     private Boolean mfa;
     @JsonIgnore
@@ -49,9 +51,4 @@ public class UserEntity extends Auditable{
                             name = "role_id", referencedColumnName = "id"))
     private RoleEntity role;
 
-    public String getFirstName() {
-        return  firstname;
-    }
-
-    public String getLastName() { return lastname;}
 }

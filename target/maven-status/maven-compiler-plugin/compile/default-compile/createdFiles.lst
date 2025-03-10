@@ -1,7 +1,10 @@
 com/utin/oj/cache/CacheConfig.class
 com/utin/oj/function/TriConsumer.class
 com/utin/oj/security/AuthenticationFilter.class
+com/utin/oj/utils/UserUtils.class
 com/utin/oj/entity/ConfirmationEntity.class
+com/utin/oj/security/SecurityConfig.class
+com/utin/oj/dto/User.class
 com/utin/oj/security/FilterChainConfiguration.class
 com/utin/oj/security/JwtConfiguration.class
 com/utin/oj/entity/RoleEntity.class
@@ -10,7 +13,6 @@ com/utin/oj/Repository/UserRepository.class
 com/utin/oj/dtorequest/UserRequest.class
 com/utin/oj/service/JwtService.class
 com/utin/oj/entity/ConfirmationEntity$ConfirmationEntityBuilder.class
-com/utin/oj/security/MyOwnAuthenticationProvider.class
 com/utin/oj/resource/UserResource.class
 com/utin/oj/utils/EmailUtils.class
 com/utin/oj/event/listener/UserEventListener$1.class
@@ -21,13 +23,17 @@ com/utin/oj/service/UserService.class
 com/utin/oj/entity/CredentialEntity$CredentialEntityBuilder.class
 com/utin/oj/enumeration/Authority.class
 com/utin/oj/domain/Response.class
+com/utin/oj/service/impl/JwtServiceImpl$1.class
 com/utin/oj/Repository/RoleRepository.class
 com/utin/oj/domain/Token.class
+com/utin/oj/domain/UserPrincipal.class
 com/utin/oj/enumeration/converter/RoleConverter.class
+com/utin/oj/service/impl/UserServiceImpl$1.class
 com/utin/oj/exception/ApiException.class
 com/utin/oj/cache/CacheStore.class
-com/utin/oj/domain/dto/User.class
 com/utin/oj/domain/RequestContext.class
+com/utin/oj/service/impl/UserServiceImpl.class
+com/utin/oj/security/ApiAuthenticationProvider.class
 com/utin/oj/entity/UserEntity.class
 com/utin/oj/domain/ApiAuthentication.class
 com/utin/oj/domain/TokenData$TokenDataBuilder.class
@@ -36,6 +42,7 @@ com/utin/oj/entity/UserEntity$UserEntityBuilder.class
 com/utin/oj/Application.class
 com/utin/oj/dtorequest/LoginRequest.class
 com/utin/oj/constant/Constants.class
+com/utin/oj/service/impl/JwtServiceImpl.class
 com/utin/oj/utils/RequestUtils.class
 com/utin/oj/Repository/ConfirmationRepository.class
 com/utin/oj/entity/Auditable.class

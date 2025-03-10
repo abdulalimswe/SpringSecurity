@@ -1,10 +1,8 @@
-package com.utin.oj.domain.dto;
+package com.utin.oj.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.utin.oj.entity.RoleEntity;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+
 
 @Data
 public class User {
@@ -12,8 +10,8 @@ public class User {
     private Long createdBy;
     private Long updatedBy;
     private String userId;
-    private String firstname;
-    private String lastname;
+    private String firstName;
+    private String lastName;
     private String email;
     private String phone;
     private String bio;
@@ -26,10 +24,29 @@ public class User {
     private String role;
     private String authorities;
     private Boolean accountNonExpired;
-    private Boolean AccountNonLocked;
+    private Boolean accountNonLocked;
     private Boolean credentialsNonExpired;
     private Boolean enabled;
     private Boolean mfa;
 
+   
+    public boolean isMfa() {
+        return mfa;
+    }
 
+    public boolean isAccountNonExpired() {
+        return accountNonExpired;
+    }
+
+    public boolean isAccountNonLocked() {
+        return accountNonLocked;
+    }
+
+    public boolean isCredentialsNonExpired() {
+        return credentialsNonExpired;
+    }
+
+    public boolean isEnabled() {
+        return  enabled;
+    }
 }

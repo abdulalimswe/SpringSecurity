@@ -13,9 +13,9 @@ import lombok.Setter;
 public class UserRequest {
 
     @NotEmpty(message = "Firstname cant be empty or null")
-    private String firstname;
+    private String firstName;
     @NotEmpty(message = "Last cant be empty or null")
-    private String lastname;
+    private String lastName;
     @NotEmpty(message = "Email cant be empty or null")
     @Email(message = "invalid mail address")
     private String email;

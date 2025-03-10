@@ -11,7 +11,8 @@
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/domain/Response.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/domain/Token.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/domain/TokenData.java
-/home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/domain/dto/User.java
+/home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/domain/UserPrincipal.java
+/home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/dto/User.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/dtorequest/LoginRequest.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/dtorequest/UserRequest.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/entity/Auditable.java
@@ -29,10 +30,11 @@
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/exception/ApiException.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/function/TriConsumer.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/resource/UserResource.java
+/home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/security/ApiAuthenticationProvider.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/security/AuthenticationFilter.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/security/FilterChainConfiguration.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/security/JwtConfiguration.java
-/home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/security/MyOwnAuthenticationProvider.java
+/home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/security/SecurityConfig.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/service/EmailService.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/service/JwtService.java
 /home/abdulalimswe/Desktop/oj/src/main/java/com/utin/oj/service/UserService.java

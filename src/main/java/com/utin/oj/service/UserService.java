@@ -1,6 +1,7 @@
 package com.utin.oj.service;
 
-import com.utin.oj.domain.dto.User;
+import com.utin.oj.dto.User;
+import com.utin.oj.entity.CredentialEntity;
 import com.utin.oj.entity.RoleEntity;
 import com.utin.oj.enumeration.LoginType;
 
@@ -9,4 +10,7 @@ public interface UserService {
     RoleEntity getRoleName(String name);
     void verifyAccountKey(String key);
     void updateLoginAttempt(String email, LoginType loginType);
+    User getUserByEmail(String email);
+    CredentialEntity getUserCredentialById(Long id);
+    User getUserByUserId(String userId);
 }
