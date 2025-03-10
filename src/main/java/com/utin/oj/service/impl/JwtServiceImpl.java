@@ -2,7 +2,7 @@ package com.utin.oj.service.impl;
 
 import com.utin.oj.domain.Token;
 import com.utin.oj.domain.TokenData;
-import com.utin.oj.domain.dto.User;
+import com.utin.oj.dto.User;
 import com.utin.oj.enumeration.TokenType;
 import com.utin.oj.security.JwtConfiguration;
 import com.utin.oj.service.JwtService;
@@ -18,6 +18,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.function.TriConsumer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
@@ -27,15 +29,13 @@ import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import static com.utin.oj.constant.Constants.*;
 import static com.utin.oj.enumeration.TokenType.ACCESS;
 import static com.utin.oj.enumeration.TokenType.REFRESH;
 import static io.jsonwebtoken.Header.JWT_TYPE;
 import static io.jsonwebtoken.Header.TYPE;
-import static java.util.OptionalDouble.empty;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static java.util.Arrays.stream;
 import static org.apache.tomcat.util.http.SameSiteCookies.NONE;
 import static org.springframework.security.core.authority.AuthorityUtils.commaSeparatedStringToAuthorityList;
 
@@ -43,8 +43,8 @@ import static org.springframework.security.core.authority.AuthorityUtils.commaSe
 @RequiredArgsConstructor
 @Slf4j
 public class JwtServiceImpl extends JwtConfiguration implements JwtService {
-
     private final UserService userService;
+
     private final Supplier<SecretKey> key = () -> Keys.hmacShaKeyFor(Decoders.BASE64.decode(getSecret()));
     private final Function<String, Claims> claimsFunction = token ->
             Jwts.parser()
@@ -55,33 +55,41 @@ public class JwtServiceImpl extends JwtConfiguration implements JwtService {
 
     private final Function<String,String> subject = token ->  getClaimsValue(token, Claims::getSubject);
 
-//    private final BiFunction<HttpServletRequest, String, Optional<String>> extractToken = (request, cookieName) ->
-//            Optional.of(stream(request.getCookies() == null ? new Cookie[]{new Cookie(EMPTY_VALUE, EMPTY_VALUE) }: request.getCookies())
-//                    .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
-//                    .map(Cookie::getValue)
-//                    .findAny())
-//                    .orElse(empty());
-
     private final BiFunction<HttpServletRequest, String, Optional<String>> extractToken = (request, cookieName) ->
-            Optional.ofNullable(request.getCookies())
-                    .map(cookies -> Arrays.stream(cookies)
-                            .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
-                            .map(Cookie::getValue)
-                            .findAny())
+            Optional.of(stream(request.getCookies() == null ? new Cookie[]{new Cookie(EMPTY_VALUE, EMPTY_VALUE) }: request.getCookies())
+                    .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
+                    .map(Cookie::getValue)
+                    .findAny())
                     .orElse(Optional.empty());
 
     private final BiFunction<HttpServletRequest, String, Optional<Cookie>> extractCookie = (request, cookieName) ->
-            Optional.ofNullable(request.getCookies())
-                    .map(cookies -> Stream.of(cookies)
+            Optional.of(stream(request.getCookies() == null ? new Cookie[]{new Cookie(EMPTY_VALUE, EMPTY_VALUE) }: request.getCookies())
                             .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
-                            .findAny())
-                    .orElse(Optional.empty());
+                            .findAny()).orElse(Optional.empty());
+
+
+//    private final BiFunction<HttpServletRequest, String, Optional<String>> extractToken = (request, cookieName) ->
+//            Optional.ofNullable(request.getCookies())
+//                    .map(cookies -> Arrays.stream(cookies)
+//                            .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
+//                            .map(Cookie::getValue)
+//                            .findAny())
+//                    .orElse(Optional.empty());
+
+    //    private final BiFunction<HttpServletRequest, String, Optional<Cookie>> extractCookie = (request, cookieName) ->
+//            Optional.ofNullable(request.getCookies())
+//                    .map(cookies -> Stream.of(cookies)
+//                            .filter(cookie -> Objects.equals(cookieName, cookie.getName()))
+//                            .findAny())
+//                    .orElse(Optional.empty());
+
+
 
     private final Supplier<JwtBuilder> builder = () ->
             Jwts.builder()
                     .header().add(Map.of( TYPE , JWT_TYPE))
                     .and()
-                    .audience().add(GET_ARRAYS_LLC)
+                    .audience().add(UTINs)
                     .and()
                     .id(UUID.randomUUID().toString())
                     .issuedAt(Date.from(Instant.now()))
@@ -94,8 +102,7 @@ public class JwtServiceImpl extends JwtConfiguration implements JwtService {
                     .claim(AUTHORITIES, user.getAuthorities())
                     .claim(ROLE, user.getRole())
                     .expiration(Date.from(Instant.now().plusSeconds(getExpiration())))
-                    .compact()
-                    : builder.get()
+                    .compact() : builder.get()
                     .subject(user.getUserId())
                     .expiration(Date.from(Instant.now().plusSeconds(getExpiration())))
                     .compact();

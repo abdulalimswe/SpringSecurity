@@ -1,6 +1,6 @@
 package com.utin.oj.domain;
 
-import com.utin.oj.domain.dto.User;
+import com.utin.oj.dto.User;
 import com.utin.oj.exception.ApiException;
 import lombok.Getter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -15,6 +15,7 @@ public class ApiAuthentication extends AbstractAuthenticationToken {
     private User user;
     @Getter
     private String email;
+    @Getter
     private String password;
     private boolean authenticated;
 
@@ -62,13 +63,6 @@ public class ApiAuthentication extends AbstractAuthenticationToken {
     @Override
     public boolean isAuthenticated() {
         return this.authenticated;
-    }
-    public String getPassword(){
-        return this.password;
-    }
-
-    public String getEmail(){
-        return this.email;
     }
 
 }

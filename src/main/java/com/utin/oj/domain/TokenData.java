@@ -1,6 +1,6 @@
 package com.utin.oj.domain;
 
-import com.utin.oj.domain.dto.User;
+import com.utin.oj.dto.User;
 import io.jsonwebtoken.Claims;
 import lombok.Builder;
 import lombok.Getter;

@@ -1,8 +1,10 @@
 package com.utin.oj.constant;
 
 public class Constants {
+
+    public static final int STRENGTH = 12;
     public static final String AUTHORITIES = "authorities";
-    public static final String GET_ARRAYS_LLC = "GET_ARRAYS_LLC";
+    public static final String UTINs = "UTINs";
     public static final String ROLE = "role";
     public static final String EMPTY_VALUE = "empty";
     public static final String ROLE_PREFIX = "ROLE_";

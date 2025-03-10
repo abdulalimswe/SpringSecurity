@@ -16,5 +16,5 @@ EMAIL_ID: abdulalimdhuronto24@gmail.com
 EMAIL_PASSWORD: iofd lhfx bdbu jske
 VERIFY_EMAIL_HOST: http://localhost:8080
 
-JWT_EXPIRATION: 432_000_000 #432_000_000 S -> 5 days
+JWT_EXPIRATION: 3600000
 JWT_SECRET: ${SECRET}

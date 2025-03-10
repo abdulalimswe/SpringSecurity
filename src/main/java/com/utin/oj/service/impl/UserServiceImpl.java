@@ -6,7 +6,7 @@ import com.utin.oj.Repository.RoleRepository;
 import com.utin.oj.Repository.UserRepository;
 import com.utin.oj.cache.CacheStore;
 import com.utin.oj.domain.RequestContext;
-import com.utin.oj.domain.dto.User;
+import com.utin.oj.dto.User;
 import com.utin.oj.entity.ConfirmationEntity;
 import com.utin.oj.entity.CredentialEntity;
 import com.utin.oj.entity.RoleEntity;
@@ -23,10 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Map;
 
 import static com.utin.oj.utils.UserUtils.createUserEntity;
+import static com.utin.oj.utils.UserUtils.fromUserEntity;
 import static java.time.LocalDateTime.now;
 
 @Service
@@ -92,6 +92,28 @@ public class UserServiceImpl implements UserService {
             }
         }
         userRepository.save(userEntity);
+    }
+
+
+    @Override
+    public User getUserByEmail(String email) {
+        UserEntity userEntity = getUserEntityByEmail(email);
+        return fromUserEntity(userEntity, userEntity.getRole(), getUserCredentialById(userEntity.getId()));
+    }
+
+
+
+
+    @Override
+    public CredentialEntity getUserCredentialById(Long userId) {
+        var credentialById = credentialRepository.getCredentialByUserEntityId(userId);
+        return credentialById.orElseThrow(() -> new ApiException("Unable to find user credential"));
+    }
+
+    @Override
+    public User getUserByUserId(String userId) {
+        var userEntity = userRepository.findUserByUserId(userId).orElseThrow(() -> new ApiException("User not found"));
+        return fromUserEntity(userEntity, userEntity.getRole(), getUserCredentialById(userEntity.getId()));
     }
 
 

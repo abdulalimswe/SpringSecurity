@@ -2,11 +2,10 @@ package com.utin.oj.service;
 
 import com.utin.oj.domain.Token;
 import com.utin.oj.domain.TokenData;
-import com.utin.oj.domain.dto.User;
+import com.utin.oj.dto.User;
 import com.utin.oj.enumeration.TokenType;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.function.Function;
