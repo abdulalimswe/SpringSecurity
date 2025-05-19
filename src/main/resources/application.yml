@@ -43,8 +43,8 @@ spring:
     mail:
       host: ${EMAIL_HOST:smtp.gmail.com}
       port: ${EMAIL_PORT:587}
-      username: ${EMAIL_ID:abdulalimdhuronto24@gmail.com}
-      password: ${EMAIL_PASSWORD:iofd lhfx bdbu jske}
+      username: ${EMAIL_ID}
+      password: ${EMAIL_PASSWORD}
       default-encoding: UTF-8
       properties:
         mail:
